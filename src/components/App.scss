@@ -1,0 +1,148 @@
+#root {
+  max-width: 1280px;
+  margin: 100px auto;
+  padding: 2rem;
+  text-align: center;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.footer{
+  position: fixed;
+  bottom: 0px;
+  left: 20px;
+}
+
+.header {
+  width: 100%;
+  left: 0px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-evenly;
+  position: absolute;
+  top: 0px;
+  .nav-bar {
+    display: flex;
+    // padding: 1rem;
+    min-width: 120px;
+    // border: 1px solid black;
+    .link {
+      position: relative; /* Needed for the pseudo-element */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0px 20px 0px 20px;
+      min-height: 50px;
+      overflow: hidden; /* Ensures the pseudo-element stays within the boundaries */
+      color:black; 
+      &:hover {
+        cursor: pointer;
+        color: white;
+        transition: color 1s ease;
+      }
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 0;
+        background-color: #ff5400;
+        border: 1px solid #ff5400;
+        z-index: -1;
+        transition: height 1s ease;
+      }
+  
+      &:hover::before {
+        height: 100%;
+      }
+  
+      /* Ensures the text is on top of the pseudo-element */
+      span {
+        position: relative;
+        z-index: 1;
+      }
+    }
+  }
+  img {
+    width:100px;
+    height: 100px;
+  }
+}
+
+.logo {
+  display: flex;
+  justify-self: flex-start;
+}
+.logo-container {
+  width: 40%;
+  @media screen and (max-width:1000px) {
+    width: 30%;
+  }
+  @media screen and (max-width:700px) {
+    width: 20%;
+  }
+}
+.center {
+  display: flex;
+  align-items: center;
+}
+
+.dog_carousels {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  @media screen and (max-width:1300px) {
+    grid-template-columns: 100%;
+  }
+
+  div{
+    margin: 10px;
+  }
+}
+
+.dog-image{
+  max-width: 50vw;
+  @media screen and (min-width:1300px) {
+    max-width: 25vw;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+.dog-description{
+  padding-left: 5vw;
+  padding-right: 5vw;
+}
+
+.carousel {
+  display: flex;
+  justify-content: center;
+  button {
+    color: white;
+    background-color: #ff5400;
+  }
+  :first-child {
+    border-radius: 5px 0px 0px 5px;
+  }
+
+  :last-child {
+    border-radius: 0px 5px 5px 0px;
+  }
+
+
+}
+
+.carousel-indicators button{
+  border:1px solid #ff5400;
+  background-color:#ff5400;
+
+  margin: 5px;
+  &:hover {
+    background-color:white;
+  }
+}
