@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "deploy": "gh-pages -d dist",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -16,6 +17,7 @@
     "react-dom": "^18.3.1",
     "react-modal": "^3.16.1",
     "react-router-dom": "^7.0.2",
+    "react-social-icons": "^6.18.0",
     "sass": "^1.83.0"
   },
   "devDependencies": {

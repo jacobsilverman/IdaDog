@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { SocialIcon } from 'react-social-icons'
 import './App.scss';
 import logo from '/dog_logo.png';
 import Schedule from './Schedule';
@@ -17,10 +18,10 @@ function App() {
         </div>
 
         <div className='nav-bar'>
-          <Link className='link' to="/dogs">dogs</Link>
-          <Link className='link' to="/schedule">schedule</Link>
-          <Link className='link' to="/about-us">about us</Link>
-          <Link className='link' to="/contact-us">contact us</Link>
+          <Link className='link' to="/dogs">Dogs</Link>
+          <Link className='link' to="/schedule">Schedule</Link>
+          <Link className='link' to="/about-us">About</Link>
+          <Link className='link' to="/contact-us">Contact</Link>
         </div>
       </div>
 
@@ -31,8 +32,16 @@ function App() {
         <Route path="/contact-us" element={<ContactUs />} />
         <Route path="/" element={<Home />} />
       </Routes>
-      
-      <footer className='footer'>@silverdogz</footer>
+{/*       
+      <div className='footer1'>
+
+        <SocialIcon url="https://facebook.com" />
+        <SocialIcon url="https://instagram.com" />
+      </div> */}
+
+      <footer className='footer'>
+        @silverdogz
+      </footer>
     </Router>
   );
 }
