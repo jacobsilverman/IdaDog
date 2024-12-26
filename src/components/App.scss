@@ -155,3 +155,20 @@
     background-color:white;
   }
 }
+
+.home_images {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 5px;
+}
+
+.ida {
+  width: 40vw;
+  height: 40vw;
+}
+
+.ida-desc {
+  max-width: 80vw;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
