@@ -17,15 +17,15 @@
 
 .schedule {
   text-align: center;
-  margin: 2rem;
-  
+  @media screen and (min-width:768px) {
+    margin: 2rem;
+  }
   .react-calendar {
     margin: 0 auto;
     border: 1px solid #ddd;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     width: 70vw;
-    height: 370px;
 
     .react-calendar__tile--active {
       background-color: transparent !important;
@@ -37,8 +37,8 @@
   .dates-continer {
     div {
       display: flex;
-      justify-content: center;
-      margin: 1em;
+      justify-content: space-evenly;
+      margin: 1em 0 1em 0;
       .date-selection {
         display: grid;
         max-width: 300px;

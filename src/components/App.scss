@@ -1,9 +1,12 @@
 #root {
   max-width: 1280px;
   margin: 100px auto;
-  padding: 2rem;
   text-align: center;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+  @media screen and (min-width: 768px ){
+    padding: 1rem;
+  }
 }
 
 .footer{
@@ -119,6 +122,10 @@
   padding: 2em;
 }
 
+.price {
+  font-size: 28px;
+}
+
 .read-the-docs {
   color: #888;
 }
@@ -168,9 +175,10 @@
 }
 
 .ida-desc {
-  max-width: 80vw;
   padding-top: 20px;
   padding-bottom: 20px;
+  padding-left: 1em;
+  padding-right: 1em;
 }
 
 .pricing-component {
