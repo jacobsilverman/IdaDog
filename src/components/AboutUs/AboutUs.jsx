@@ -7,7 +7,7 @@ function AboutUs() {
   
   return (
     <div className="about-us-container">
-      <h1>About Us</h1>
+      <h2>About Us</h2>
       <p>
         At our facility, we specialize in providing individual dog care with a focus on their comfort and well-being. Each dog enjoys ample space to roam and play, access to a secure backyard with a security perimeter, and loving caretakers who treat every dog like family.
       </p>

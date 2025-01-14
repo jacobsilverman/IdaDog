@@ -7,7 +7,6 @@ import './Schedule.scss'; // Add custom styles here if needed
 Modal.setAppElement('#root'); // Required for accessibility
 
 function Schedule() {
-  const [selectedDate, setSelectedDate] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -20,11 +19,6 @@ function Schedule() {
   });
   const [today] = useState(() => new Date().toISOString().split("T")[0]);
 
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
-    setIsModalOpen(true);
-    handleDateClick(date);
-  };
 
   const handleDateClick = (date) => {
     const formatedDate = date.toISOString().split('T')[0];
@@ -43,8 +37,13 @@ function Schedule() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setIsModalOpen(true);
+  };
+
+  const handleFinalSubmit= (e) => {
+    e.preventDefault();
     setIsModalOpen(false);
-    setFormData({ name: '', email: '', startTime: '', endTime: '', start: '', end: '' }); // Reset form
+    setFormData({ name: '', email: '', phone: '', startTime: '', endTime: '', start: '', end: '' });
   };
 
   const disablePreviousDates = ({ date }) => {
@@ -62,23 +61,62 @@ function Schedule() {
     return date.toISOString().split('T')[0];
   };
 
-  const getPrice = (date1, date2) => {
-    if (!date1 || !date2){
+  const getDateDiff = () => {
+    if (!formData.start || !formData.end){
       return null;
     }
-    const d1 = new Date(date1);
-    const d2 = new Date(date2);
+    const d1 = new Date(formData.start);
+    const d2 = new Date(formData.end);
     const diffInMs = Math.abs(d2 - d1);
     const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
 
-    if (diffInDays < 7) {
-      return diffInDays * 50;
-    } else if (diffInDays > 28) {
-      return diffInDays * 40;
-    }
-    return diffInDays * 45;
+    return diffInDays;
   }
 
+  const getDiscount = () => {
+    const diff = getDateDiff();
+
+    let discount;
+    if (diff < 7) {
+      discount = '';
+    } else if (diff > 28) {
+      discount = 'Monthly Discount Applied';
+    }else {
+      discount = 'Weekly Discount Applied';
+    }
+    return discount;
+  }
+
+  const getPrice = () => {
+    const diff = getDateDiff();
+    let price;
+    if (diff < 7) {
+      price = diff * 50;
+    } else if (diff > 28) {
+      price = diff * 40;
+    }else {
+      price = diff * 45;
+    }
+    return price;
+  }
+  const handlePhoneNumberChange = (event) => {
+    let input = event.target.value;
+    let digits = input.replace(/\D/g, '');
+  
+    if (digits.length===0){
+      digits = '';
+    }else if (digits.length <= 3) {
+      digits = `(${digits}`;
+    } else if (digits.length <= 6) {
+      digits = `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
+    } else {
+      digits = `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
+    }
+  
+    event.target.value = digits;
+
+    handleInputChange(event);
+  }
 
   const tileClassName = ({ date, view }) => {
     if (view === 'month') {
@@ -96,10 +134,10 @@ function Schedule() {
     <div className="schedule">
       <h2>Schedule a Service</h2>
       <Calendar 
-        onClickDay={handleDateChange} 
+        onClickDay={handleDateClick} 
         tileDisabled={disablePreviousDates}
         tileClassName={tileClassName} />
-      <div className='dates-continer'>
+      <form className='dates-continer' onSubmit={handleSubmit}>
         <div>
           <div className='date-selection'>
             <label htmlFor="start-date">Choose a start date:</label>
@@ -109,7 +147,8 @@ function Schedule() {
               type="date" 
               id="start-date" 
               name="start"
-              min={today} />
+              min={today}
+              required />
           </div>
 
           <div className='date-selection'>
@@ -121,47 +160,80 @@ function Schedule() {
               type="date" 
               id="end-date" 
               name="end"
-              min={addOneDay(formData.start)} />
+              min={addOneDay(formData.start)}
+              required />
           </div>
         </div>
-        <div className='basic-input'>
-          <label htmlFor="name">Your Name:</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleInputChange}
-            required
-          />
+        <div>
+
+          <div className='basic-input'>
+            <label htmlFor="startTime">Drop Off Time: <span>(optional)</span></label>
+            <input
+              type="time"
+              id="startTime"
+              name="startTime"
+              value={formData.startTime}
+              onChange={handleInputChange}
+            />
+          </div>
+
+          <div className='basic-input'>
+            <label htmlFor="endTime">Pick Up Time: <span>(optional)</span></label>
+            <input
+              type="time"
+              id="endTime"
+              name="endTime"
+              value={formData.endTime}
+              onChange={handleInputChange}
+            />
+          </div>
         </div>
-        <div className='basic-input'>
-          <label htmlFor="email">Email:</label>
-          <input
-            type="text"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleInputChange}
-            required
-          />
+        <div>
+          <div className='basic-input'>
+            <label htmlFor="name">Your Name:</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+          <div className='basic-input'>
+            <label htmlFor="email">Email:</label>
+            <input
+              type="email"
+              id="email"
+              title="Please enter a email address"
+              placeholder="example@gmail.com"
+              name="email"
+              value={formData.email}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
         </div>
-        <div className='basic-input'>
-          <label htmlFor="phone">Phone:</label>
-          <input
-            type="tel"
-            id="phone"
-            name="phone"
-            value={formData.phone}
-            pattern="\d{3}[-.\s]?\d{3}[-.\s]?\d{4}"
-            onChange={handleInputChange}
-            required
-          />
+        <div>
+          <div className='basic-input'>
+            <label htmlFor="phone">Phone: <span>(optional)</span></label>
+            <input
+              type="text"
+              id="phone"
+              name="phone"
+              value={formData.phone}
+              title="Please enter a phone number"
+              placeholder="Ex. (777)-777-7777"
+              onChange={handlePhoneNumberChange}
+              maxLength={14}
+            />
+          </div>
         </div>
+
         <button>
           Submit
         </button>
-      </div>
+      </form>
       <Modal
         isOpen={isModalOpen}
         onRequestClose={() => setIsModalOpen(false)}
@@ -169,24 +241,41 @@ function Schedule() {
         className="modal"
         overlayClassName="modal-overlay"
       >
-        <h2>Schedule for {selectedDate && selectedDate.toLocaleDateString()}</h2>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor="time">Preferred Time:</label>
-            <input
-              type="time"
-              id="time"
-              name="time"
-              value={formData.time}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-          <button type="submit">Confirm</button>
+        <h1>{formData.name}</h1>
+        <h2>Please confirm your scheduled service </h2>
+        <h3>Scheduled from {formData?.start} to {formData?.end} </h3>
+
+        <span className='modal-container'>
+          {formData?.startTime && (<div>
+            Drop Off: {formData?.startTime}
+          </div>)}
+          {formData?.endTime && (<div>
+            Pick Up: {formData?.endTime}
+          </div>)}
+        </span>
+
+        <span className='modal-container'>
+          {formData?.email && (<div>
+            Email: {formData?.email}
+          </div>)}
+          {formData?.phone && (<div>
+            Phone: {formData?.phone}
+          </div>)}
+        </span>
+        <br />
+        {getDiscount() && (<div className='modal-discount'>
+          <b>{getDiscount()}</b>
+        </div>)}
+        <div className='modal-price'>
+          Total: ${getPrice()}
+        </div>
+        
+        <div>
+          <button type="submit" onClick={handleFinalSubmit}>Confirm</button>
           <button type="button" onClick={() => setIsModalOpen(false)}>
             Cancel
           </button>
-        </form>
+        </div>
       </Modal>
     </div>
   );
