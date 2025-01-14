@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import Calendar from 'react-calendar';
 import Modal from 'react-modal';
+import { ToastContainer , toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import 'react-calendar/dist/Calendar.css';
-import './Schedule.scss'; // Add custom styles here if needed
+import './Schedule.scss';
 
-Modal.setAppElement('#root'); // Required for accessibility
-
+Modal.setAppElement('#root');
 function Schedule() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({
@@ -18,7 +19,6 @@ function Schedule() {
     end: ''
   });
   const [today] = useState(() => new Date().toISOString().split("T")[0]);
-
 
   const handleDateClick = (date) => {
     const formatedDate = date.toISOString().split('T')[0];
@@ -43,6 +43,7 @@ function Schedule() {
   const handleFinalSubmit= (e) => {
     e.preventDefault();
     setIsModalOpen(false);
+    toast.success(`Please finalize the reservation by confirming through your email: ${formData.email}`, { autoClose: 30000 });
     setFormData({ name: '', email: '', phone: '', startTime: '', endTime: '', start: '', end: '' });
   };
 
@@ -132,6 +133,7 @@ function Schedule() {
 
   return (
     <div className="schedule">
+      <ToastContainer />
       <h2>Schedule a Service</h2>
       <Calendar 
         onClickDay={handleDateClick} 
