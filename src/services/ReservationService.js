@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:5000';
-const apiUrl = 'https://idadog.herokuapp.com';
+// const BASE_URL = 'http://localhost:5000';
+const API_URL = 'https://idadog-60ed3202fa90.herokuapp.com';
 
 /**
  * Fetch reservations from the backend server.
@@ -9,7 +9,7 @@ const apiUrl = 'https://idadog.herokuapp.com';
  */
 export const fetchReservations = async () => {
     try {
-        const response = await axios.get(`${apiUrl}/reservations`, {
+        const response = await axios.get(`${API_URL}/reservations`, {
             withCredentials: true,  // Include credentials (cookies) in the request
         });
         return response.data;
