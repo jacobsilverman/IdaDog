@@ -73,8 +73,17 @@ function Schedule() {
   const disablePreviousDates = ({ date }) => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    return date < today; 
+    return date < today;
   };
+
+  const disableReservationDates = (date) => {
+    return reservations.some((reservation) => {
+      const start = new Date(reservation.start);
+      let end = new Date(reservation.end);
+      end.setDate(end.getDate() + 1);
+      return start <= date && date <= end;
+    })
+  }
 
   const addOneDay = (dateString) => {
     if (!dateString){
@@ -143,6 +152,10 @@ function Schedule() {
   }
 
   const tileClassName = ({ date, view }) => {
+    if (disableReservationDates(date)) {
+      return 'reserved-date';
+    }
+
     if (view === 'month') {
       if (formData.start && date.toISOString().split('T')[0] === formData?.start) {
         return 'start-date';

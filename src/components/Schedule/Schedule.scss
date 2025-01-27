@@ -1,6 +1,13 @@
 .schedule {
   .react-calendar {
     .react-calendar__tile {
+      &.reserved-date {
+        background-color: #ff5400 !important;
+        color: white !important;
+        pointer-events: none;
+        opacity: .5;
+      }
+
       &.start-date {
         background-color: green !important;
         color: white !important;

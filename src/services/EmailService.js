@@ -38,7 +38,7 @@ export const sendEmail = async (info) => {
                             <p>${info.startTime ? "start time: "+info.startTime : ''}</p>
                             <p>end date: ${info.end}</p>
                             <p>${info.endTime ? "end time: "+info.endTime : ''}</p>
-                            <p>phone: ${info.phone}</p>
+                            <p>${info.phone ? "phone: "+info.phone : ''}</p>
                         </div>
                     </body>
                 </html>
