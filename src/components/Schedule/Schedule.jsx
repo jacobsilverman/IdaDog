@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
 import Modal from 'react-modal';
 import { ToastContainer , toast } from "react-toastify";
@@ -6,9 +6,13 @@ import "react-toastify/dist/ReactToastify.css";
 import 'react-calendar/dist/Calendar.css';
 import './Schedule.scss';
 import { sendEmail } from '../../services/EmailService';
+import { fetchReservations } from '../../services/ReservationService';
 
 Modal.setAppElement('#root');
 function Schedule() {
+  const [reservations, setReservations] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -20,6 +24,23 @@ function Schedule() {
     end: ''
   });
   const [today] = useState(() => new Date().toISOString().split("T")[0]);
+
+  useEffect(() => {
+    const getReservations = async () => {
+      try {
+          const data = await fetchReservations();
+          console.log("reservations: ", data)
+          setReservations(data);
+      } catch (err) {
+          console.error(err);
+          setError('Failed to load reservations');
+      } finally {
+          setLoading(false);
+      }
+    };
+
+    getReservations();
+  }, [])
 
   const handleDateClick = (date) => {
     const formatedDate = date.toISOString().split('T')[0];
@@ -132,6 +153,9 @@ function Schedule() {
     }
     return null;
   };
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>{error}</p>;
 
   return (
     <div className="schedule">
