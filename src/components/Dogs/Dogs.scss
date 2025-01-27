@@ -1,0 +1,50 @@
+.dog_carousels {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    @media screen and (max-width:1300px) {
+      grid-template-columns: 100%;
+    }
+  
+    div{
+      margin: 10px;
+    }
+  }
+  
+  .dog-image{
+    max-width: 50vw;
+    @media screen and (min-width:1300px) {
+      max-width: 25vw;
+    }
+  }
+  
+  .dog-description {
+    padding-left: 5vw;
+    padding-right: 5vw;
+  }
+  
+  .carousel {
+    display: flex;
+    justify-content: center;
+    button {
+      color: white;
+      background-color: #ff5400;
+    }
+    :first-child {
+      border-radius: 5px 0px 0px 5px;
+    }
+  
+    :last-child {
+      border-radius: 0px 5px 5px 0px;
+    }
+  }
+  
+  .carousel-indicators button{
+    border:1px solid #ff5400;
+    background-color:#ff5400;
+  
+    margin: 5px;
+    &:hover {
+      background-color:white;
+    }
+  }
+  
