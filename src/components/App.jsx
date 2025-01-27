@@ -6,7 +6,6 @@ import Schedule from './Schedule';
 import ContactUs from './ContactUs';
 import AboutUs from './AboutUs';
 import Dogs from './Dogs';
-import { sendEmail } from '../services/EmailService';
 
 function App() {
   return (
@@ -87,7 +86,6 @@ function Home() {
       {priceComponent("daily", 50)}
       {priceComponent("weekly", 45)}
       {priceComponent("monthly", 40)}
-      <button onClick={sendEmail}>test</button>
     </div>
 
     {/* <div className='home_images'>

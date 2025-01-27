@@ -5,6 +5,7 @@ import { ToastContainer , toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import 'react-calendar/dist/Calendar.css';
 import './Schedule.scss';
+import { sendEmail } from '../../services/EmailService';
 
 Modal.setAppElement('#root');
 function Schedule() {
@@ -43,6 +44,7 @@ function Schedule() {
   const handleFinalSubmit= (e) => {
     e.preventDefault();
     setIsModalOpen(false);
+    sendEmail(formData);
     toast.success(`Please finalize the reservation by confirming through your email: ${formData.email}`, { autoClose: 30000 });
     setFormData({ name: '', email: '', phone: '', startTime: '', endTime: '', start: '', end: '' });
   };
