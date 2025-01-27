@@ -1,10 +1,13 @@
 import axios from 'axios';
 
 export const sendEmail = async (info) => {
+    const BASE_URL = 'http://localhost:5000';
+    const apiUrl = 'https://idadog.herokuapp.com';
+
     try {
         console.log(info);
-        const verificationLink = `http://localhost:5000/confirm-reservation?n=${info.name}&p=${info.phone}&s=${info.start}&e=${info.end}&st=${info.startTime}&et=${info.endTime}`;
-        const response = await axios.post('http://localhost:5000/send-email', {
+        const verificationLink = `${apiUrl}/confirm-reservation?n=${info.name}&p=${info.phone}&s=${info.start}&e=${info.end}&st=${info.startTime}&et=${info.endTime}`;
+        const response = await axios.post('${apiUrl}/send-email', {
             to: 'jacob.h.silverman@gmail.com',
             subject: 'Confirm Reservation',
             html: `
