@@ -4,8 +4,17 @@
       &.reserved-date {
         background-color: #ff5400 !important;
         color: white !important;
-        pointer-events: none;
         opacity: .5;
+        &:hover {
+          opacity: 1;
+          &::after {
+            content: "CANCEL";
+          }
+          abbr {
+            visibility: hidden;
+            display:none;
+          }
+        }
       }
 
       &.start-date {
@@ -85,6 +94,11 @@
   h3 {
     text-align: center;
     font-size: 1.3em;
+  }
+
+  input {
+    display: flex;
+    margin: 1em auto;
   }
 
   .modal-container {

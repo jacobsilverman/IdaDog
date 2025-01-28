@@ -5,10 +5,9 @@ export const sendEmail = async (info) => {
     const API_URL = 'https://idadog-60ed3202fa90.herokuapp.com';
 
     try {
-        console.log(info);
         const verificationLink = `${API_URL}/confirm-reservation?n=${info.name}&p=${info.phone}&s=${info.start}&e=${info.end}&st=${info.startTime}&et=${info.endTime}`;
         const response = await axios.post(`${API_URL}/send-email`, {
-            to: 'jacob.h.silverman@gmail.com',
+            to: info.email,
             subject: 'Confirm Reservation',
             html: `
                 <!doctype html>
@@ -47,7 +46,6 @@ export const sendEmail = async (info) => {
                 </html>
             `,
         });
-        console.log(response.data);
         return response.data;
     } catch (error) {
         console.error(error);
