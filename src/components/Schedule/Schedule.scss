@@ -81,6 +81,43 @@
       }
     }
   }
+
+  .explain-colors {
+    display: flex;
+    justify-content: center;
+    grid-template-columns: repeat(1fr, 6);
+    margin: 0 auto;
+    width: 70vw;
+    div {
+      min-width: 100px;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      margin: 10px 10px;
+      padding: .6em;
+      &.unavailable {
+        background-color: #f0f0f0;
+      }
+      &.today {
+        background-color: yellow;
+      }
+      &.reserved {
+        background-color: #ffa97f;
+        color: white;
+      }
+      &.single-day {
+        background-color: blue;
+        color: white;
+      }
+      &.start-date {
+        background-color: green;
+        color: white;
+      }
+      &.end-date {
+        background-color: red;
+        color: white;
+      }
+    }
+  }
 }
 
 .modal {
@@ -124,6 +161,11 @@
     text-align: center;
     margin: .2em 1em 1em 1em;
     font-size: 30px;
+  }
+
+  .disclaimer {
+    padding: 5px;
+    text-align: center;
   }
 
   div {

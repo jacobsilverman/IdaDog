@@ -79,6 +79,10 @@ const ConfirmationModal = ({formData, isConfirmationModalOpen, setisConfirmation
             <div className='modal-price'>
                 Total: ${getPrice()}
             </div>
+
+            <div className='disclaimer'>
+                All reversations are subject to potential price increases based on extra large dogs, dogs that aren't potty trained, and any destructive behaviors in order to compensate for damages.
+            </div>
             
             <div>
                 <button type="submit" onClick={handleFinalSubmit}>Confirm</button>
