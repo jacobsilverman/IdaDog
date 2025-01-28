@@ -1,0 +1,82 @@
+
+.pricing-component {
+    display: grid;
+    max-width: 300px;
+    ul {
+      list-style-type: none;
+      padding: 0px;
+    }
+    button {
+      // background-color: #ff5400;
+      &:hover {
+        color: white;
+        border: 1px solid white;
+      }
+    }
+  }
+  .ida-desc {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 1em;
+    padding-right: 1em;
+  }
+  
+.prices-container {
+    display: flex;
+    justify-content: center;
+    @media screen and (max-width:700px) {
+      display: grid;
+      grid-template-columns: 1fr;
+      align-items: center;
+      justify-items: center;
+      >div {
+        min-width: 300px;
+      }
+    }
+    >div {
+      margin: 20px;
+      padding: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      border-radius: 10px; 
+  
+      > div:first-child {
+        color:white;
+        margin-left: -10px;
+        margin-right: -10px;
+        font-size: 25px;
+        min-width: 130px;
+      }
+      button {
+        margin-top: 15px;
+      }
+    }
+    .daily-header {
+      background-color: #b10000;
+      padding: 10px;
+    }
+    .weekly-header {
+      background-color: #d72f00;
+      padding: 10px;
+    }
+    .monthly-header {
+      background-color: #ff5400;
+      padding: 10px;
+    } 
+  }
+
+.price {
+    font-size: 28px;
+}
+
+
+.home_images {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 5px;
+}
+
+.ida {
+    width: 40vw;
+    height: 40vw;
+}
+  

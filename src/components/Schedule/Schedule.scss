@@ -1,6 +1,27 @@
 .schedule {
   .react-calendar {
     .react-calendar__tile {
+      &.reserved-date {
+        background-color: #ff5400 !important;
+        color: white !important;
+        opacity: .5;
+        &:hover {
+          opacity: 1;
+          &::after {
+            content: "CANCEL";
+          }
+          abbr {
+            visibility: hidden;
+            display:none;
+          }
+        }
+      }
+
+      &.same-date {
+        background-color: blue !important;
+        color: white !important;
+      }
+
       &.start-date {
         background-color: green !important;
         color: white !important;
@@ -71,12 +92,18 @@
   text-align: left;
 
   h1 {
+    text-align: center;
     margin-bottom: 0px;
   }
 
   h3 {
     text-align: center;
     font-size: 1.3em;
+  }
+
+  input {
+    display: flex;
+    margin: 1em auto;
   }
 
   .modal-container {
@@ -134,8 +161,12 @@
       color: white;
       cursor: pointer;
       transition: background 0.3s;
+      &:disabled {
+        cursor: inherit;
+        opacity: .5;
+      }
 
-      &:hover {
+      &:hover:not([disabled]) {
         background-color: #e04800;
       }
 

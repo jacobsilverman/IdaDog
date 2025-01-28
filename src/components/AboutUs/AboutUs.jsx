@@ -3,7 +3,7 @@ import './AboutUs.scss';
 import Map from '../Map';
 
 function AboutUs() {
-  const coordinates = { latitude: 32.995648, longitude: -117.271133 }; // 639 Ida Ave, Solana Beach
+  const coordinates = { latitude: 32.988183, longitude: -117.256542 }; // 639 Ida Ave, Solana Beach
   
   return (
     <div className="about-us-container">

@@ -1,13 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
-import Modal from 'react-modal';
+import { ToastContainer , toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import 'react-calendar/dist/Calendar.css';
-import './Schedule.scss'; // Add custom styles here if needed
-
-Modal.setAppElement('#root'); // Required for accessibility
+import './Schedule.scss';
+import { sendEmail } from '../../services/EmailService';
+import { fetchReservations } from '../../services/ReservationService';
+import ConfirmationModal from '../Modals/ConfirmationModal.jsx';
+import CancelModal from '../Modals/CancelModal.jsx';
 
 function Schedule() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [reservations, setReservations] = useState([]);
+  const [cancelReservation, setCancelReservation] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [isConfirmationModalOpen, setisConfirmationModalOpen] = useState(false);
+  const [isCancelModalOpen, setisCancelModalOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -19,8 +27,29 @@ function Schedule() {
   });
   const [today] = useState(() => new Date().toISOString().split("T")[0]);
 
+  useEffect(() => {
+    const getReservations = async () => {
+      try {
+          const data = await fetchReservations();
+          setReservations(data);
+      } catch (err) {
+          console.error(err);
+          setError('Failed to load reservations');
+      } finally {
+          setLoading(false);
+      }
+    };
+
+    getReservations();
+  }, [])
 
   const handleDateClick = (date) => {
+    const reservationIndex = findReservationDate(date);
+    if (reservationIndex>=0){
+      setCancelReservation(reservations[reservationIndex]);
+      setisCancelModalOpen(true);
+      return;
+    }
     const formatedDate = date.toISOString().split('T')[0];
     if (!formData.start || (formData.start && formData.end) || (formatedDate < formData.start)) {
       setFormData(prev => {return { ...prev, 'start': formatedDate }});
@@ -37,68 +66,32 @@ function Schedule() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setIsModalOpen(true);
+    setisConfirmationModalOpen(true);
   };
 
   const handleFinalSubmit= (e) => {
     e.preventDefault();
-    setIsModalOpen(false);
+    setisConfirmationModalOpen(false);
+    sendEmail(formData);
+    toast.success(`Please finalize the reservation by confirming through your email: ${formData.email}`, { autoClose: 30000 });
     setFormData({ name: '', email: '', phone: '', startTime: '', endTime: '', start: '', end: '' });
   };
 
   const disablePreviousDates = ({ date }) => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    return date < today; 
+    return date < today;
   };
-
-  const addOneDay = (dateString) => {
-    if (!dateString){
-      return today;
-    }
-    const date = new Date(dateString);
-    date.setDate(date.getDate() + 1);
-    return date.toISOString().split('T')[0];
-  };
-
-  const getDateDiff = () => {
-    if (!formData.start || !formData.end){
-      return null;
-    }
-    const d1 = new Date(formData.start);
-    const d2 = new Date(formData.end);
-    const diffInMs = Math.abs(d2 - d1);
-    const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
-
-    return diffInDays;
+  
+  const findReservationDate = (date) => {
+    return reservations.findIndex(reservation => {
+      const start = new Date(reservation.start);
+      let end = new Date(reservation.end);
+      end.setDate(end.getDate() + 1);
+      return start <= date && date <= end;
+    })
   }
 
-  const getDiscount = () => {
-    const diff = getDateDiff();
-
-    let discount;
-    if (diff < 7) {
-      discount = '';
-    } else if (diff > 28) {
-      discount = 'Monthly Discount Applied';
-    }else {
-      discount = 'Weekly Discount Applied';
-    }
-    return discount;
-  }
-
-  const getPrice = () => {
-    const diff = getDateDiff();
-    let price;
-    if (diff < 7) {
-      price = diff * 50;
-    } else if (diff > 28) {
-      price = diff * 40;
-    }else {
-      price = diff * 45;
-    }
-    return price;
-  }
   const handlePhoneNumberChange = (event) => {
     let input = event.target.value;
     let digits = input.replace(/\D/g, '');
@@ -119,8 +112,15 @@ function Schedule() {
   }
 
   const tileClassName = ({ date, view }) => {
+    if (findReservationDate(date)>=0) {
+      return 'reserved-date';
+    }
+
     if (view === 'month') {
-      if (formData.start && date.toISOString().split('T')[0] === formData?.start) {
+      if (formData?.start && formData?.end && date.toISOString().split('T')[0] === formData?.start && date.toISOString().split('T')[0] === formData?.end) {
+        return 'same-date';
+      }
+      if (formData.start && date.toISOString().split('T')[0] === formData?.start) { 
         return 'start-date';
       }
       if (formData.end && date.toISOString().split('T')[0] === formData?.end) {
@@ -130,8 +130,12 @@ function Schedule() {
     return null;
   };
 
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>{error}</p>;
+
   return (
     <div className="schedule">
+      <ToastContainer />
       <h2>Schedule a Service</h2>
       <Calendar 
         onClickDay={handleDateClick} 
@@ -160,7 +164,7 @@ function Schedule() {
               type="date" 
               id="end-date" 
               name="end"
-              min={addOneDay(formData.start)}
+              min={formData.start}
               required />
           </div>
         </div>
@@ -234,49 +238,16 @@ function Schedule() {
           Submit
         </button>
       </form>
-      <Modal
-        isOpen={isModalOpen}
-        onRequestClose={() => setIsModalOpen(false)}
-        contentLabel="Schedule Service"
-        className="modal"
-        overlayClassName="modal-overlay"
-      >
-        <h1>{formData.name}</h1>
-        <h2>Please confirm your scheduled service </h2>
-        <h3>Scheduled from {formData?.start} to {formData?.end} </h3>
+      <ConfirmationModal 
+        formData={formData} 
+        isConfirmationModalOpen={isConfirmationModalOpen} 
+        setisConfirmationModalOpen={setisConfirmationModalOpen}
+        handleFinalSubmit={handleFinalSubmit} />
+      <CancelModal
+        cancelReservation={cancelReservation}
+        isCancelModalOpen={isCancelModalOpen}
+        setisCancelModalOpen={setisCancelModalOpen} />
 
-        <span className='modal-container'>
-          {formData?.startTime && (<div>
-            Drop Off: {formData?.startTime}
-          </div>)}
-          {formData?.endTime && (<div>
-            Pick Up: {formData?.endTime}
-          </div>)}
-        </span>
-
-        <span className='modal-container'>
-          {formData?.email && (<div>
-            Email: {formData?.email}
-          </div>)}
-          {formData?.phone && (<div>
-            Phone: {formData?.phone}
-          </div>)}
-        </span>
-        <br />
-        {getDiscount() && (<div className='modal-discount'>
-          <b>{getDiscount()}</b>
-        </div>)}
-        <div className='modal-price'>
-          Total: ${getPrice()}
-        </div>
-        
-        <div>
-          <button type="submit" onClick={handleFinalSubmit}>Confirm</button>
-          <button type="button" onClick={() => setIsModalOpen(false)}>
-            Cancel
-          </button>
-        </div>
-      </Modal>
     </div>
   );
 }

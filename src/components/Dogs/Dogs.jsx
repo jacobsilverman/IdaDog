@@ -1,5 +1,6 @@
 
 import { useState } from 'react';
+import './Dogs.scss';
 import annie from '/annie.png';
 import annie2 from '/annie2.png';
 import leo from '/leo.png';
