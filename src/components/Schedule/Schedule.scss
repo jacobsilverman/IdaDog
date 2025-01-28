@@ -10,6 +10,11 @@
           &::after {
             content: "CANCEL";
           }
+          @media screen and (max-width: 650px) {
+            &::after {
+              content: "X";
+            }
+          }
           abbr {
             visibility: hidden;
             display:none;
