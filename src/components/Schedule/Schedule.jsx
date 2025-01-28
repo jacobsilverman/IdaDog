@@ -10,6 +10,7 @@ import ConfirmationModal from '../Modals/ConfirmationModal.jsx';
 import CancelModal from '../Modals/CancelModal.jsx';
 
 function Schedule() {
+  const [refreshCalcendar, setRefreshCalendar] = useState(0);
   const [reservations, setReservations] = useState([]);
   const [cancelReservation, setCancelReservation] = useState({});
   const [loading, setLoading] = useState(true);
@@ -41,7 +42,7 @@ function Schedule() {
     };
 
     getReservations();
-  }, [])
+  }, [refreshCalcendar])
 
   const handleDateClick = (date) => {
     const reservationIndex = findReservationDate(date);
@@ -73,7 +74,7 @@ function Schedule() {
     e.preventDefault();
     setisConfirmationModalOpen(false);
     sendEmail(formData);
-    toast.success(`Please finalize the reservation by confirming through your email: ${formData.email}`, { autoClose: 30000 });
+    toast.success(`Please finalize the reservation by confirming through your email: ${formData.email}, then refresh this page to see your reservation`, { autoClose: 30000 });
     setFormData({ name: '', email: '', phone: '', startTime: '', endTime: '', start: '', end: '' });
   };
 
@@ -136,6 +137,16 @@ function Schedule() {
   return (
     <div className="schedule">
       <ToastContainer />
+      <ConfirmationModal 
+        formData={formData} 
+        isConfirmationModalOpen={isConfirmationModalOpen} 
+        setisConfirmationModalOpen={setisConfirmationModalOpen}
+        handleFinalSubmit={handleFinalSubmit} />
+      <CancelModal
+        cancelReservation={cancelReservation}
+        isCancelModalOpen={isCancelModalOpen}
+        setRefreshCalendar={setRefreshCalendar}
+        setisCancelModalOpen={setisCancelModalOpen} />
       <h2>Schedule a Service</h2>
       <Calendar 
         onClickDay={handleDateClick} 
@@ -238,16 +249,6 @@ function Schedule() {
           Submit
         </button>
       </form>
-      <ConfirmationModal 
-        formData={formData} 
-        isConfirmationModalOpen={isConfirmationModalOpen} 
-        setisConfirmationModalOpen={setisConfirmationModalOpen}
-        handleFinalSubmit={handleFinalSubmit} />
-      <CancelModal
-        cancelReservation={cancelReservation}
-        isCancelModalOpen={isCancelModalOpen}
-        setisCancelModalOpen={setisCancelModalOpen} />
-
     </div>
   );
 }

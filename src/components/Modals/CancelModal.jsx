@@ -4,12 +4,13 @@ import { deleteReservation } from '../../services/ReservationService';
 import { toast } from "react-toastify";
 
 Modal.setAppElement('#root');
-const CancelModal = ({cancelReservation, isCancelModalOpen, setisCancelModalOpen}) => {
+const CancelModal = ({cancelReservation, isCancelModalOpen, setRefreshCalendar, setisCancelModalOpen}) => {
     const [cancelEmail, setCancelEmail] = useState('');
 
     const submitCancelation = () => {
         deleteReservation(cancelReservation.id).then(() => {
             toast.success(`Your reservation has been successfully removed`, { autoClose: 30000 });
+            setRefreshCalendar(cur => cur+1)
         }).catch(() => {
             toast.error(`There was an issue deleting your reservation`, { autoClose: 30000 });
         });
