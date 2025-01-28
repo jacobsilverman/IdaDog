@@ -67,6 +67,21 @@ function Schedule() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const start = new Date(formData.start);
+    const end = new Date(formData.end);
+    // Check if the date is already reserved
+    if (findReservationDate(start) >= 0) {
+      toast.error("This date is already reserved. Please select another start date.");
+      return;
+    }
+    if (findReservationDate(end) >= 0) {
+      toast.error("This date is already reserved. Please select another end date.");
+      return;
+    }
+    if (validateReservationDate(start , end) >= 0) {
+      toast.error("There is a reservation in between these dates. Please select another start date & end date.");
+      return;
+    }
     setisConfirmationModalOpen(true);
   };
 
@@ -97,6 +112,15 @@ function Schedule() {
       let end = new Date(reservation.end);
       end.setDate(end.getDate() + 1);
       return start <= date && date <= end;
+    })
+  }
+
+  const validateReservationDate = (startDate, endDate) => {
+    return reservations.findIndex(reservation => {
+      const start = new Date(reservation.start);
+      let end = new Date(reservation.end);
+      end.setDate(end.getDate() + 1);
+      return  (start <= startDate && startDate <= end) || (start <= endDate && endDate <= end);
     })
   }
 
