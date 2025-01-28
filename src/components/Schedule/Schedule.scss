@@ -17,6 +17,11 @@
         }
       }
 
+      &.same-date {
+        background-color: blue !important;
+        color: white !important;
+      }
+
       &.start-date {
         background-color: green !important;
         color: white !important;
@@ -156,8 +161,12 @@
       color: white;
       cursor: pointer;
       transition: background 0.3s;
+      &:disabled {
+        cursor: inherit;
+        opacity: .5;
+      }
 
-      &:hover {
+      &:hover:not([disabled]) {
         background-color: #e04800;
       }
 

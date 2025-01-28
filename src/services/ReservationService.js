@@ -18,3 +18,22 @@ export const fetchReservations = async () => {
         throw new Error('Failed to fetch reservations');
     }
 };
+
+
+/**
+ * delete reservation from the backend server.
+ * @returns {Promise<Array>} A promise resolving to confirm db deletion.
+ */
+export const deleteReservation = async (id) => {
+    try {
+        const response = await axios.post(`${API_URL}/delete-reservation`, {
+            id,
+            withCredentials: true,
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching reservations:', error);
+        throw new Error('Failed to fetch reservations');
+    }
+};
+

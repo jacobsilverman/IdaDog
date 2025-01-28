@@ -31,7 +31,6 @@ function Schedule() {
     const getReservations = async () => {
       try {
           const data = await fetchReservations();
-          console.log("reservations: ", data)
           setReservations(data);
       } catch (err) {
           console.error(err);
@@ -118,6 +117,9 @@ function Schedule() {
     }
 
     if (view === 'month') {
+      if (formData?.start && formData?.end && date.toISOString().split('T')[0] === formData?.start && date.toISOString().split('T')[0] === formData?.end) {
+        return 'same-date';
+      }
       if (formData.start && date.toISOString().split('T')[0] === formData?.start) { 
         return 'start-date';
       }

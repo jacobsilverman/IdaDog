@@ -5,7 +5,7 @@ export const sendEmail = async (info) => {
     const API_URL = 'https://idadog-60ed3202fa90.herokuapp.com';
 
     try {
-        const verificationLink = `${API_URL}/confirm-reservation?n=${info.name}&p=${info.phone}&s=${info.start}&e=${info.end}&st=${info.startTime}&et=${info.endTime}`;
+        const verificationLink = `${API_URL}/confirm-reservation?n=${info.name}&p=${info.phone}&s=${info.start}&e=${info.end}&st=${info.startTime}&et=${info.endTime}&em=${info.email}`;
         const response = await axios.post(`${API_URL}/send-email`, {
             to: info.email,
             subject: 'Confirm Reservation',
