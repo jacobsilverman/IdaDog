@@ -67,8 +67,8 @@ function Schedule() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const start = new Date(formData.start);
-    const end = new Date(formData.end);
+    const start = new Date(formData.start+"T00:00:00");
+    const end = new Date(formData.end+"T00:00:00");
     // Check if the date is already reserved
     if (findReservationDate(start) >= 0) {
       toast.error("This date is already reserved. Please select another start date.");
@@ -78,7 +78,7 @@ function Schedule() {
       toast.error("This date is already reserved. Please select another end date.");
       return;
     }
-    if (validateReservationDate(start , end) >= 0) {
+    if (validateReservationDate(start, end) >= 0) {
       toast.error("There is a reservation in between these dates. Please select another start date & end date.");
       return;
     }
@@ -108,19 +108,17 @@ function Schedule() {
   
   const findReservationDate = (date) => {
     return reservations.findIndex(reservation => {
-      const start = new Date(reservation.start);
-      let end = new Date(reservation.end);
-      end.setDate(end.getDate() + 1);
+      const start = new Date(reservation.start+"T00:00:00");
+      let end = new Date(reservation.end+"T00:00:00");
       return start <= date && date <= end;
     })
   }
 
   const validateReservationDate = (startDate, endDate) => {
     return reservations.findIndex(reservation => {
-      const start = new Date(reservation.start);
-      let end = new Date(reservation.end);
-      end.setDate(end.getDate() + 1);
-      return  (start <= startDate && startDate <= end) || (start <= endDate && endDate <= end);
+      const start = new Date(reservation.start+"T00:00:00");
+      let end = new Date(reservation.end+"T00:00:00");
+      return startDate <= start && end <= endDate;
     })
   }
 
