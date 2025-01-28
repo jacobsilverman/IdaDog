@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const sendEmail = async (info) => {
-    // const BASE_URL = 'http://localhost:5000';
+    // const API_URL = 'http://localhost:5000';
     const API_URL = 'https://idadog-60ed3202fa90.herokuapp.com';
 
     try {

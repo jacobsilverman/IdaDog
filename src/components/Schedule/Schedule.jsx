@@ -73,9 +73,16 @@ function Schedule() {
   const handleFinalSubmit= (e) => {
     e.preventDefault();
     setisConfirmationModalOpen(false);
-    sendEmail(formData);
-    toast.success(`Please finalize the reservation by confirming through your email: ${formData.email}, then refresh this page to see your reservation`, { autoClose: 30000 });
-    setFormData({ name: '', email: '', phone: '', startTime: '', endTime: '', start: '', end: '' });
+    sendEmail(formData).then((response) => {
+      if (response.status < 200 || response.status >= 300) {
+          throw new Error(`Failed to send email, status code: ${response.status}`);
+      }
+      setFormData({ name: '', email: '', phone: '', startTime: '', endTime: '', start: '', end: '' });
+      toast.success(`Please finalize the reservation by confirming through your email: ${formData.email}, then refresh this page to see your reservation`, { autoClose: 30000 });
+    }).catch((err) => {
+      console.error(err);
+      toast.error(`failure while emailing: ${formData.email}`, { autoClose: 30000 });
+    });
   };
 
   const disablePreviousDates = ({ date }) => {
