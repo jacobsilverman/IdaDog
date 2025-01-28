@@ -83,16 +83,21 @@
   }
 
   .explain-colors {
-    display: flex;
+    display: grid;
     justify-content: center;
-    grid-template-columns: repeat(1fr, 6);
+    grid-template-columns: repeat(6, 1fr);
     margin: 0 auto;
-    width: 70vw;
+    max-width: 70vw;
+    @media screen and (max-width:750px) {
+      grid-template-rows: 1fr 1fr;
+      grid-template-columns: repeat(3, 1fr);
+      max-width: 100vw;
+    }
     div {
-      min-width: 100px;
+      min-width: 10vw;
       border: 1px solid transparent;
       border-radius: 8px;
-      margin: 10px 10px;
+      margin: 0px 10px 10px 10px;
       padding: .6em;
       &.unavailable {
         background-color: #f0f0f0;
