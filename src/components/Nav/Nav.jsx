@@ -1,8 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import logo from '/dog_logo.png';
 import './Nav.scss';
 
 const Nav = () => {
+    const location = useLocation();
+
     return (
         <div className='header'>
             <div className='logo-container'>
@@ -13,10 +15,10 @@ const Nav = () => {
 
             <div className='nav-bar'>
             {/* <Link className='link' to="/">Home</Link> */}
-                <Link className='link' to="/schedule">Schedule</Link>
-                <Link className='link' to="/dogs">Dogs</Link>
-                <Link className='link' to="/about-us">About</Link>
-                <Link className='link' to="/contact-us">Contact</Link>
+                <Link className={`link ${location.pathname === "/schedule" ? "active" : ""}`} to="/schedule">Schedule</Link>
+                <Link className={`link ${location.pathname === "/dogs" ? "active" : ""}`} to="/dogs">Dogs</Link>
+                <Link className={`link ${location.pathname === "/about-us" ? "active" : ""}`} to="/about-us">About</Link>
+                <Link className={`link ${location.pathname === "/contact-us" ? "active" : ""}`} to="/contact-us">Contact</Link>
             </div>
         </div>
     );

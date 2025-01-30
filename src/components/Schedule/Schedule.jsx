@@ -160,8 +160,8 @@ function Schedule() {
     return null;
   };
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>{error}</p>;
+  if (loading) return <div>Loading</div>;
+  if (error) return <div>{error}</div>;
 
   return (
     <div className="schedule">
@@ -182,28 +182,12 @@ function Schedule() {
         tileDisabled={disablePreviousDates}
         tileClassName={tileClassName} />
       <div className='explain-colors'>
-        <div className='unavailable'>
-          unavailable
-        </div>
-        <div className='today'>
-          today
-        </div>
-        <div className='reserved'>
-          reserved
-        </div>
-
-        <div className='single-day'>
-          single day
-        </div>
-
-        <div className='start-date'>
-          start date
-        </div>
-
-        <div className='end-date'>
-          end date
-        </div>
-
+        <div className='unavailable'>unavailable</div>
+        <div className='today'>today</div>
+        <div className='reserved'>reserved</div>
+        <div className='single-day'>single day</div>
+        <div className='start-date'>start date</div>
+        <div className='end-date'>end date</div>
       </div>
       <form className='dates-continer' onSubmit={handleSubmit}>
         <div>
