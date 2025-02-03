@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-export const sendEmail = async (info) => {
-    // const API_URL = 'http://localhost:5000';
-    const API_URL = 'https://idadog-60ed3202fa90.herokuapp.com';
+const API_URL = 'https://idadog-60ed3202fa90.herokuapp.com';
+// const API_URL = 'http://localhost:5000';
 
+export const sendEmail = async (info) => {
     try {
         const verificationLink = `${API_URL}/confirm-reservation?n=${info.name}&p=${info.phone}&s=${info.start}&e=${info.end}&st=${info.startTime}&et=${info.endTime}&em=${info.email}`;
         const response = await axios.post(`${API_URL}/send-email`, {
@@ -52,3 +52,30 @@ export const sendEmail = async (info) => {
         return error;
     }
 };
+
+export const contactUsEmail = async (info) => {
+    try {
+        const response = await axios.post(`${API_URL}/send-email`, {
+            to: 'jacob.h.silverman@gmail.com',
+            subject: 'User is Contacting Us',
+            html: `
+                <!doctype html>
+                <html>
+                    <head>
+                        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+                    </head>
+                    <body style="font-family: sans-serif;">
+                        <div style="display: block; margin: auto; max-width: 600px;" class="main">
+                            <div>email: ${info.email}</div>
+                            <div>${info.comment}</div>
+                        </div>
+                    </body>
+                </html>
+            `,
+        });
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        return error;
+    }
+}
