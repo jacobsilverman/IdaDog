@@ -1,12 +1,10 @@
 .header {
   width: 100%;
-  max-width: 1400px;
+  max-width: none;
   left: 0px;
   display: flex;
   align-items: flex-end;
   justify-content: space-evenly;
-  position: absolute;
-  top: 0px;
   .nav-bar {
     display: flex;
     min-width: 120px;

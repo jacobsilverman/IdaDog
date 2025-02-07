@@ -1,10 +1,16 @@
-.footer{
-    position: fixed;
-    bottom: 0px;
-    left: 20px;
-  }
-  
-  .footer1 {
-    position: sticky;
-    border: 1px solid black;
-  }
+.footer {
+  display: flex;
+  color: white;
+  padding: 10px 10px 10px 10px;
+  margin-top: 15px;
+  background-color: #ff5400;
+  justify-content: space-between;
+  align-items: center;
+
+}
+
+.social-icon-footer {
+  width: 35px !important;
+  height: 35px !important;
+  margin: 0px 10px;
+}

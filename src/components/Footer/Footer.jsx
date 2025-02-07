@@ -1,17 +1,17 @@
 import './Footer.scss';
-// import { SocialIcon } from 'react-social-icons';
+import { SocialIcon } from 'react-social-icons';
 
 const Footer = () => {
-    
-    {/*
-    <div className='footer1'>
-        <SocialIcon url="https://facebook.com" />
-        <SocialIcon url="https://instagram.com" />
-    </div> 
-    */}
     return (
         <footer className='footer'>
-            @silverdogz
+            <div>
+                @silverdogz
+            </div>
+            <div>
+                <SocialIcon className='social-icon-footer' network="facebook" url="https://facebook.com/jacob.silverman.73" />
+                <SocialIcon className='social-icon-footer' network="instagram" url="https://instagram.com/hardpersontofind" />
+                <SocialIcon className='social-icon-footer' network="linkedin" url="https://linkedin.com/in/jacobsilverman0" />
+            </div> 
         </footer>
     );
 }

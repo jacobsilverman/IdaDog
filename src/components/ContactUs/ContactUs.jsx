@@ -1,7 +1,5 @@
-// ContactUs.jsx
 import React, { useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
-
 import { contactUsEmail } from '../../services/EmailService';
 import './ContactUs.scss';
 
@@ -17,7 +15,7 @@ function ContactUs() {
       return;
     }
 
-    contactUsEmail(info).then(() => {
+    contactUsEmail(info).then((response) => {
       if (response.status < 200 || response.status >= 300) {
         throw new Error(`Failed to send email, status code: ${response.status}`);
       }
