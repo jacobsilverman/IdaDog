@@ -5,7 +5,7 @@ const Footer = () => {
     return (
         <footer className='footer'>
             <div>
-                @silverdogz
+                @IdaDog
             </div>
             <div>
                 <SocialIcon className='social-icon-footer' network="facebook" url="https://facebook.com/jacob.silverman.73" />
