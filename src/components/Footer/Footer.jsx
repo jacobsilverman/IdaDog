@@ -13,7 +13,7 @@ const Footer = () => {
                 <SocialIcon className='social-icon-footer' network="linkedin" url="https://linkedin.com/in/jacobsilverman0" />
                 <SocialIcon className='social-icon-footer' network="github" url="https://github.com/jacobsilverman" />
             </div> 
-        </footer>
+        </footer> 
     );
 }
 
