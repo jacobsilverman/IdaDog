@@ -108,6 +108,9 @@ function Schedule() {
   
   const findReservationDate = (date) => {
     return reservations.findIndex(reservation => {
+      if (disablePreviousDates({date: date})) {
+        return false;
+      }
       const start = new Date(reservation.start+"T00:00:00");
       let end = new Date(reservation.end+"T00:00:00");
       return start <= date && date <= end;
