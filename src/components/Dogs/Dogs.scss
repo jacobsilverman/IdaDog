@@ -1,50 +1,96 @@
 .dog_carousels {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+
+  @media screen and (max-width:1300px) {
+    grid-template-columns: 100%;
+  }
+  // * {
+  //   border: 1px solid black;
+  // }
+
+  h2 {
+    margin: 0px;
+  }
+
+  > div {
+    margin: 10px;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    @media screen and (max-width:1300px) {
-      grid-template-columns: 100%;
+    grid-template-columns: 1fr;
+    grid-template-rows: 60px 325px 30px 125px;
+    grid-row-gap: 10px;
+
+    @media screen and (max-width: 850px) {
+      grid-template-rows: 60px 225px 30px 125px;
     }
-  
-    div{
-      margin: 10px;
+    > :first-child {
+      height: 40px;
+      margin: 10px 0px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
     }
-  }
-  
-  .dog-image{
-    max-width: 50vw;
-    @media screen and (min-width:1300px) {
-      max-width: 25vw;
-    }
-  }
-  
-  .dog-description {
-    padding-left: 5vw;
-    padding-right: 5vw;
-  }
-  
-  .carousel {
-    display: flex;
-    justify-content: center;
-    button {
-      color: white;
-      background-color: #ff5400;
-    }
-    :first-child {
-      border-radius: 5px 0px 0px 5px;
-    }
-  
-    :last-child {
-      border-radius: 0px 5px 5px 0px;
+    > :last-child {
+      display: flex;
+      align-items: flex-start;
     }
   }
-  
-  .carousel-indicators button{
-    border:1px solid #ff5400;
+}
+
+.dog-image{
+  width: 50vw;
+  height: 325px;
+  @media screen and (max-width: 850px) {
+    height: 225px;
+  }
+  @media screen and (min-width:1300px) {
+    width: 30vw;
+  }
+  @media screen and (min-width:1900px) {
+    width: 20vw;
+  }
+}
+
+.dog-description {
+  padding-left: 2vw;
+  padding-right: 2vw;
+}
+
+.carousel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  > button {
+    height: 325px;
+    color: white;
+    background-color: #ff5400;
+
+    @media screen and (max-width: 850px) {
+      height: 225px;
+    }
+  }
+  > :first-child {
+    border-radius: 5px 0px 0px 5px;
+  }
+
+  > :last-child {
+    border-radius: 0px 5px 5px 0px;
+  }
+}
+
+.carousel-indicators {
+  button {
+    border: 1px solid #ff5400;
     background-color:#ff5400;
-  
+    border-radius: 15px;
     margin: 5px;
     &:hover {
       background-color:white;
     }
+    &.active {
+      border: 2.5px solid #ff5400;
+      background-color: white;
+    }
   }
-  
+}

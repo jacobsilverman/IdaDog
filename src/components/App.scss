@@ -7,11 +7,14 @@
   flex-direction: column;
 
   .body {
-    min-width: 800px;
+
     max-width: 1280px;
     padding: 1rem;
     margin: 0px auto 0px auto;
     margin-bottom: auto;
+    @media screen and (min-width: 850px) {
+      min-width: 800px;
+    }
   }
 }
 

@@ -8,6 +8,7 @@ import { sendEmail } from '../../services/EmailService';
 import { fetchReservations } from '../../services/ReservationService';
 import ConfirmationModal from '../Modals/ConfirmationModal.jsx';
 import CancelModal from '../Modals/CancelModal.jsx';
+import { SyncLoader } from 'react-spinners';
 
 function Schedule() {
   const [refreshCalcendar, setRefreshCalendar] = useState(0);
@@ -163,7 +164,7 @@ function Schedule() {
     return null;
   };
 
-  if (loading) return <div>Loading</div>;
+  if (loading) return <SyncLoader color='#ff5400' />
   if (error) return <div>{error}</div>;
 
   return (

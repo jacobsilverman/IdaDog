@@ -37,7 +37,7 @@ function Dogs() {
       'name': 'Fly',
       'images': [fly, fly2, fly3],
       'index': 0,
-      'description': "My sister's childhood male Chinese Crested Powder Puff was, in many ways, a whirlwind of chaos that taught some hard but valuable lessons about living with a high-maintenance pet. His constant peeing inside, incessant barking at every little sound, and absolute refusal to be trained were enough to test the patience of a saint. He wasn't just a dog; he was a daily challenge wrapped in fur, reminding everyone around him that not all pets come easy."
+      'description': "My sister's childhood male Chinese Crested Powder Puff was, in many ways, a whirlwind of chaos that taught some hard but valuable lessons about living with a high-maintenance pet. His lack of poppy training, incessant barking, and refusal to be trained were enough to test the patience of a saint. He was a daily challenge wrapped in fur, reminding everyone around him that not all pets come easy."
     },
     'camille': {
       'name': 'Ms. Camille',
@@ -79,31 +79,31 @@ function Dogs() {
 
   const DogElement = (dog) => {
     return (
-      <div className='center'>
+      <div>
         <div>
-          {dogs[dog]['name']}
-          <div className="carousel">
-            <button onClick={() => handleIndexChange(dog, 'prev')} className="carousel-button">&#8249;</button>
-            <img
-              className="dog-image"
-              src={dogs[dog]['images'][dogs[dog]['index']]}
-              alt={`Dog ${dogs[dog]['index'] + 1}`}
+          <h2>{dogs[dog]['name']}</h2>
+        </div>
+        <div className="carousel">
+          <button onClick={() => handleIndexChange(dog, 'prev')} className="carousel-button">&#8249;</button>
+          <img
+            className="dog-image"
+            src={dogs[dog]['images'][dogs[dog]['index']]}
+            alt={`Dog ${dogs[dog]['name']} ${dogs[dog]['index'] + 1}`}
+          />
+          <button onClick={() => handleIndexChange(dog, 'next')} className="carousel-button">&#8250;</button>
+        </div>
+        <div className="carousel-indicators">
+          {dogs[dog]['images'].map((_, index) => (
+            <button
+              key={index}
+              className={`indicator-button ${index === dogs[dog]['index'] ? 'active' : ''}`}
+              onClick={() => handleIndexChange(dog, 'set', index)}
             />
-            <button onClick={() => handleIndexChange(dog, 'next')} className="carousel-button">&#8250;</button>
-          </div>
-          <div className="carousel-indicators">
-            {dogs[dog]['images'].map((_, index) => (
-              <button
-                key={index}
-                className={`indicator-button ${index === dogs[dog]['index'] ? 'active' : ''}`}
-                onClick={() => handleIndexChange(dog, 'set', index)}
-              />
-            ))}
-          </div>
-          
-          <div className='dog-description'>
-            {dogs[dog]['description']}
-          </div>
+          ))}
+        </div>
+        
+        <div className='dog-description'>
+          {dogs[dog]['description']}
         </div>
       </div>
     );
