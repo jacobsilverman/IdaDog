@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import './Dogs.scss';
 import annie from '/annie.png';
@@ -25,7 +24,7 @@ function Dogs() {
       'name': 'Leo',
       'images': [leo],
       'index': 0,
-      'description': "The name Leo brings to mind a confident and loyal companion who carries himself with a quiet dignity but never hesitates to dive into fun and adventure. Leo might be the kind of dog who’s always ready for a game of fetch, a long walk, or a cuddle session at the end of the day. His name suits a dog with a big heart, fierce loyalty, and a personality that shines as brightly as a lion's mane."
+      'description': "The name Leo brings to mind a confident and loyal companion who carries himself with a quiet dignity but never hesitates to dive into fun and adventure. Leo might be the kind of dog who's always ready for a game of fetch, a long walk, or a cuddle session at the end of the day. His name suits a dog with a big heart, fierce loyalty, and a personality that shines as brightly as a lion's mane."
     },
     'havi': {
       'name': 'Havi',
@@ -79,9 +78,9 @@ function Dogs() {
 
   const DogElement = (dog) => {
     return (
-      <div className='center'>
-        <div>
-          {dogs[dog]['name']}
+      <div className='dog-card'>
+        <div className='dog-card-content'>
+          <h2 className='dog-name'>{dogs[dog]['name']}</h2>
           <div className="carousel">
             <button onClick={() => handleIndexChange(dog, 'prev')} className="carousel-button">&#8249;</button>
             <img
